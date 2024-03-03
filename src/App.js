@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { Suspense,lazy } from 'react';
+const HomePage = lazy(()=>import('./Components/HomePage.js'));
+const Final = lazy(()=> import('./Components/Final.js'))
+
 
 function App() {
+  const [pincode, setPincode] = useState("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+        <Routes>
+          <Route path="/" element={<HomePage setPincode={setPincode} />} />
+          <Route path="/output" element={<Suspense fallback={<p>Loading... Information</p>}><Final pincode={pincode} /></Suspense>} />
+          
+        </Routes>
+     
     </div>
   );
 }
